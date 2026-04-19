@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCC Music</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --navy: #1e3a6f;
+    --navy-dark: #152847;
+    --navy-light: #2a4d8f;
+    --gold: #d4a82c;
+    --gold-light: #e8c04a;
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+  }
+
+  body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color: white;
+    padding: 3rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative staff lines */
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 60px;
+    transform: translateY(-50%);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 11px,
+      rgba(255, 255, 255, 0.06) 11px,
+      rgba(255, 255, 255, 0.06) 12px
+    );
+    pointer-events: none;
+  }
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .logo-container {
+    flex-shrink: 0;
+  }
+
+  .logo {
+    width: 90px;
+    height: auto;
+    display: block;
+    mix-blend-mode: multiply;
+    filter: contrast(1.05);
+  }
+
+  .logo-placeholder {
+    width: 90px;
+    height: 110px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .header-text h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+
+  .header-text .accent {
+    color: var(--gold-light);
+  }
+
+  .header-text p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+  }
+
+  /* Divider */
+  .divider {
+    height: 6px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+  }
+
+  /* Main content */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .header-text h1 {
+      font-size: 2.5rem;
+    }
+    .header-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .header {
+      padding: 2rem 1rem 2.5rem;
+    }
+    .main {
+      padding: 2rem 1rem 3rem;
+    }
+  }
+
+  /* Tile */
+  .tile {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .tile:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(30, 58, 111, 0.18);
+    border-color: var(--navy-light);
+  }
+
+  .tile:hover .tile-thumbnail {
+    transform: scale(1.05);
+  }
+
+  .tile:hover .launch-icon {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  .tile-thumbnail-wrap {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e8eef7 0%, #d1dceb 100%);
+    position: relative;
+  }
+
+  .tile-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tile-thumbnail-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--navy);
+    opacity: 0.5;
+  }
+
+  .tile-thumbnail-placeholder svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .tile-thumbnail-placeholder span {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .launch-icon {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: var(--navy);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translate(4px, -4px);
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .launch-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .tile-body {
+    padding: 1.1rem 1.25rem 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tile-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .tile-description {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--navy-dark);
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 1.5rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+  }
+
+  .footer strong {
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<!-- Embedded fallback crest (shown if mcc-logo.png is not found) -->
+<svg id="fallback-crest" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" style="display:none" class="logo">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6b4a1f"/>
+      <stop offset="100%" style="stop-color:#4a3515"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outline -->
+  <path d="M 20 20 L 180 20 L 180 140 Q 180 200 100 235 Q 20 200 20 140 Z"
+        fill="url(#shieldGrad)" stroke="#d4a82c" stroke-width="6"/>
+  <!-- Top banner -->
+  <rect x="25" y="25" width="150" height="30" fill="#5a3f1a"/>
+  <text x="100" y="47" font-family="Arial, sans-serif" font-size="16" font-weight="900"
+        fill="#d4a82c" text-anchor="middle">MOUNT CARMEL</text>
+  <!-- Blue stripes -->
+  <rect x="25" y="62" width="150" height="5" fill="#1e3a6f"/>
+  <rect x="25" y="105" width="150" height="5" fill="#1e3a6f"/>
+  <rect x="25" y="148" width="150" height="5" fill="#1e3a6f"/>
+  <!-- Stars (7-pointed) -->
+  <g fill="#d4a82c" stroke="#fff" stroke-width="0.8">
+    <polygon points="100,75 103,85 113,85 105,91 108,101 100,95 92,101 95,91 87,85 97,85"/>
+    <polygon points="55,118 58,128 68,128 60,134 63,144 55,138 47,144 50,134 42,128 52,128"/>
+    <polygon points="145,118 148,128 158,128 150,134 153,144 145,138 137,144 140,134 132,128 142,128"/>
+  </g>
+  <!-- Chevron -->
+  <path d="M 50 175 Q 100 155 150 175 L 150 185 Q 100 165 50 185 Z" fill="#d4a82c"/>
+  <!-- Banner -->
+  <path d="M 15 215 Q 100 240 185 215 L 185 230 Q 100 255 15 230 Z"
+        fill="#5a3f1a" stroke="#d4a82c" stroke-width="1.5"/>
+  <text x="100" y="230" font-family="Georgia, serif" font-size="11" font-weight="700"
+        fill="#ffffff" text-anchor="middle" font-style="italic">CARITAS ET DIGNITAS</text>
+</svg>
+
+<header class="header">
+  <div class="header-content">
+    <div class="logo-container">
+      <img src="thumbnails/mcc-logo.png" alt="Mount Carmel College Crest" class="logo" id="mainLogo">
+    </div>
+    <div class="header-text">
+      <h1>MCC <span class="accent">MUSIC</span></h1>
+      <p>Resources for Student Learning</p>
+    </div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<main class="main">
+  <h2 class="section-title">Learning Resources</h2>
+  <p class="section-subtitle">Click any tile to launch the resource in a new tab.</p>
+
+  <div class="grid" id="resourceGrid">
+    <!-- Tiles populated by JavaScript -->
+  </div>
+</main>
+
+<footer class="footer">
+  &copy; <span id="year"></span> <strong>Mount Carmel College</strong> · Music Department
+</footer>
+
+<script>
+  // ============================================================
+  // EDIT YOUR RESOURCES HERE
+  // ============================================================
+  // For each resource:
+  //   title:       The name shown on the tile
+  //   description: Short text under the title (optional — use "" if not needed)
+  //   thumbnail:   Path to the thumbnail image (e.g., "thumbnails/resource1.png")
+  //   url:         Path to the HTML file (e.g., "resources/resource1.html")
+  // ============================================================
+
+  const resources = [
+    { title: "Resource 1", description: "Note Ninja", thumbnail: "thumbnails/note-ninja.png", url: "https://mccmusic.github.io/Note-Ninja/" },
+    { title: "Resource 2", description: "Scale Guru", thumbnail: "thumbnails/Scale-Guru.png", url: "https://mccmusic.github.io/Scale-Guru/" },
+    { title: "Resource 3", description: "Chord Wizard", thumbnail: "thumbnails/chord-wizard.png", url: "https://mccmusic.github.io/Chord-Wizard/" },
+    { title: "Resource 4", description: "Short description here", thumbnail: "thumbnails/resource4.png", url: "resources/resource4.html" },
+    { title: "Resource 5", description: "Short description here", thumbnail: "thumbnails/resource5.png", url: "resources/resource5.html" },
+    { title: "Resource 6", description: "Short description here", thumbnail: "thumbnails/resource6.png", url: "resources/resource6.html" },
+    { title: "Resource 7", description: "Short description here", thumbnail: "thumbnails/resource7.png", url: "resources/resource7.html" },
+    { title: "Resource 8", description: "Short description here", thumbnail: "thumbnails/resource8.png", url: "resources/resource8.html" },
+    { title: "Resource 9", description: "Short description here", thumbnail: "thumbnails/resource9.png", url: "resources/resource9.html" },
+    { title: "Resource 10", description: "Short description here", thumbnail: "thumbnails/resource10.png", url: "resources/resource10.html" },
+    { title: "Resource 11", description: "Short description here", thumbnail: "thumbnails/resource11.png", url: "resources/resource11.html" },
+    { title: "Resource 12", description: "Short description here", thumbnail: "thumbnails/resource12.png", url: "resources/resource12.html" }
+  ];
+
+  // ============================================================
+  // No need to edit below this line
+  // ============================================================
+
+  const placeholderSVG = `
+    <div class="tile-thumbnail-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
+      </svg>
+      <span>Thumbnail</span>
+    </div>
+  `;
+
+  const launchIconSVG = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17L17 7M17 7H8M17 7v9"/>
+    </svg>
+  `;
+
+  const grid = document.getElementById('resourceGrid');
+
+  resources.forEach(resource => {
+    const tile = document.createElement('a');
+    tile.className = 'tile';
+    tile.href = resource.url;
+    tile.target = '_blank';
+    tile.rel = 'noopener noreferrer';
+
+    const thumbWrap = document.createElement('div');
+    thumbWrap.className = 'tile-thumbnail-wrap';
+
+    const img = document.createElement('img');
+    img.className = 'tile-thumbnail';
+    img.src = resource.thumbnail;
+    img.alt = resource.title + ' thumbnail';
+    img.onerror = function() {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'tile-thumbnail-placeholder';
+      placeholder.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        <span>Thumbnail</span>
+      `;
+      img.replaceWith(placeholder);
+    };
+
+    const launchIcon = document.createElement('div');
+    launchIcon.className = 'launch-icon';
+    launchIcon.innerHTML = launchIconSVG;
+
+    thumbWrap.appendChild(img);
+    thumbWrap.appendChild(launchIcon);
+
+    const body = document.createElement('div');
+    body.className = 'tile-body';
+    body.innerHTML = `
+      <div class="tile-title">${resource.title}</div>
+      ${resource.description ? `<div class="tile-description">${resource.description}</div>` : ''}
+    `;
+
+    tile.appendChild(thumbWrap);
+    tile.appendChild(body);
+    grid.appendChild(tile);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Logo fallback: if mcc-logo.png fails to load, use the embedded SVG crest
+  const mainLogo = document.getElementById('mainLogo');
+  mainLogo.onerror = function() {
+    const fallback = document.getElementById('fallback-crest');
+    fallback.style.display = 'block';
+    fallback.classList.add('logo');
+    mainLogo.replaceWith(fallback);
+  };
+  // Trigger check in case already failed
+  if (mainLogo.complete && mainLogo.naturalWidth === 0) {
+    mainLogo.onerror();
+  }
+</script>
+
+</body>
+</html>
